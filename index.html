@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0e1020" />
+  <meta name="description" content="Gere nomes, ideias e descrições para jogos. Salve favoritos no navegador, copie tudo e use grátis até offline." />
+  <title>GameSpark V2 — Gerador de Ideias e Favoritos</title>
+  <style>
+    :root {color-scheme:dark; --bg:#0b0d18; --panel:#14182a; --line:#313650; --muted:#a6aec7; --white:#f8f9ff; --purple:#9e83ff; --pink:#ed8dce; --green:#66e1ac}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:radial-gradient(ellipse 55% 37% at 82% 0%,#39245d 0,transparent 68%), radial-gradient(ellipse 46% 35% at 0% 8%,#172b57 0,transparent 68%),var(--bg);color:var(--white);min-height:100vh}
+    button,select{font:inherit} button{cursor:pointer} button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #c2b2ff;outline-offset:3px}
+    .wrap{max-width:1080px;margin:auto;padding:0 22px}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:24px 0;border-bottom:1px solid #ffffff15}
+    .brand{font-weight:900;font-size:1.25rem;letter-spacing:-.7px;display:flex;align-items:center;gap:10px}
+    .mark{display:grid;place-items:center;width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,#8b6aff,#de78be);font-size:1.25rem;box-shadow:0 9px 22px #a06aff36}
+    .micro{font-size:.78rem;color:var(--muted);font-weight:600}
+    .pill{border:1px solid #7266aa77;color:#e4d7ff;background:#5d4a9c25;border-radius:100px;padding:8px 12px;font-size:.77rem;font-weight:750}
+    header{padding:60px 0 37px;text-align:center}
+    .eyebrow{font-weight:800;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;color:#bdaaff}
+    h1{font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.06;margin:17px auto 18px;max-width:760px;letter-spacing:-.06em}
+    h1 span{background:linear-gradient(95deg,#bbadff,#fb9bdc);-webkit-background-clip:text;background-clip:text;color:transparent}
+    header p{color:#b9bed2;line-height:1.75;margin:auto;max-width:560px;font-size:1.02rem}
+    .stats{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-top:28px}
+    .chip{background:#ffffff0b;border:1px solid #ffffff1f;padding:8px 13px;border-radius:11px;color:#bdc6df;font-size:.82rem}
+    main{padding-bottom:64px}
+    .panel{border:1px solid #343851;background:linear-gradient(145deg,#1b2034,#131627);border-radius:25px;padding:29px;box-shadow:0 22px 68px #0000003b}
+    .panelhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:23px;flex-wrap:wrap}
+    h2{font-size:1.2rem;margin:0;letter-spacing:-.03em}
+    .sub{color:var(--muted);font-size:.85rem;margin-top:8px;line-height:1.5}
+    .controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px}
+    label{display:block;color:#dce1f7;font-size:.82rem;font-weight:700;margin:0 0 9px}
+    select{width:100%;height:48px;border-radius:12px;border:1px solid #414761;background:#101525;color:white;padding:0 13px;appearance:auto}
+    .cta{width:100%;border:0;color:#161023;background:linear-gradient(110deg,#b8a5ff,#eda5d7);padding:15px 16px;border-radius:14px;font-size:1rem;font-weight:850;margin:22px 0 0;box-shadow:0 11px 28px #b487f52b}
+    .cta:hover{filter:brightness(1.08)}
+    .output{margin-top:22px;display:none;animation:fade .22s ease}
+    .output.visible{display:block}
+    @keyframes fade{from{transform:translateY(7px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .outhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 14px;flex-wrap:wrap}
+    .outhead strong{font-size:1rem}.muted{color:var(--muted);font-size:.82rem}
+    .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .card{background:#0e1324;border:1px solid #343a55;border-radius:16px;padding:17px;display:flex;gap:13px;align-items:center;justify-content:space-between;min-width:0}
+    .card h3{font-size:1.02rem;margin:0 0 5px;overflow-wrap:anywhere;line-height:1.35}
+    .card small{font-size:.77rem;color:#a9b0c9}
+    .copy{flex-shrink:0;border:1px solid #5a5280;background:#292541;color:#eadfff;border-radius:10px;padding:9px 12px;font-weight:700;font-size:.78rem;min-width:79px}
+    .copy:hover{background:#42375d}
+    .ideas{margin-top:15px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .idea{padding:19px;border-radius:16px;background:#222139;border:1px solid #49405c}
+    .idea small{font-size:.7rem;letter-spacing:1px;color:#bdabff;font-weight:850;text-transform:uppercase}
+    .idea p{color:#e2def1;line-height:1.55;margin:12px 0;font-size:.89rem}
+    .idea button{background:transparent;border:1px solid #615577;border-radius:9px;padding:8px 10px;color:#e8dfff;font-size:.79rem;font-weight:700}
+    .note{margin-top:15px;font-size:.79rem;color:#a4adca;line-height:1.6}
+    .extras{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:22px}
+    .extra{border:1px solid #2b3049;background:#121728;padding:18px;border-radius:16px}
+    .extra span{font-size:1.4rem}.extra strong{display:block;font-size:.86rem;margin:9px 0 5px}.extra p{font-size:.78rem;color:var(--muted);line-height:1.5;margin:0}
+    footer{border-top:1px solid #ffffff15;padding:25px 0 35px;text-align:center;color:#7f8aa8;font-size:.78rem;line-height:1.7}
+    #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(15px);background:#d7ffe9;color:#103324;border-radius:12px;padding:11px 17px;font-weight:800;font-size:.84rem;opacity:0;pointer-events:none;transition:all .2s;box-shadow:0 8px 30px #0004;z-index:10;white-space:nowrap}
+    #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    .card{align-items:center}
+    .card-buttons{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+    .save{flex-shrink:0;border:1px solid #675581;background:#211b36;color:#e4d7ff;border-radius:10px;padding:9px 10px;font-weight:750;font-size:.78rem}
+    .save[aria-pressed="true"]{background:#493155;border-color:#ac75c1;color:#ffd7f5}
+    .save:hover,.secondary-action:hover{filter:brightness(1.16)}
+    .output-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+    .secondary-action{border:1px solid #645b89;background:#292641;color:#efe7ff;padding:10px 15px;border-radius:10px;font:inherit;font-size:.84rem;font-weight:750;cursor:pointer}
+    .secondary-action.danger{color:#ffc2c7;border-color:#82444f;background:#3a2432}
+    .favorites-panel{margin-top:22px;background:linear-gradient(145deg,#171b30,#111526)}
+    .fav-count{font-size:.79rem;background:#40365d;border:1px solid #73649e;border-radius:999px;padding:3px 9px;margin-left:6px;color:#e6d8ff;vertical-align:2px}
+    .empty{border:1px dashed #3f4663;padding:20px;color:#b6bdd3;border-radius:13px;line-height:1.55;font-size:.9rem;margin:0}
+    .card.saved-card{background:#141729}
+    .saved-card h3{font-size:.98rem}
+    .saved-card .copy{min-width:auto}
+    [hidden]{display:none!important}
+    @media(max-width:700px){header{padding:40px 0 29px}.controls{grid-template-columns:1fr}.cards,.ideas,.extras{grid-template-columns:1fr}.panel{padding:18px}.micro{display:none}.stats{gap:8px}.pill{font-size:.69rem}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <nav><div class="brand"><span class="mark" aria-hidden="true">✦</span> GameSpark</div><span class="micro">Para quem cria jogos</span><span class="pill">100% gratuito</span></nav>
+  <header>
+    <div class="eyebrow">✨ IDEIAS EM SEGUNDOS</div>
+    <h1>Seu próximo jogo <span>começa com uma ideia.</span></h1>
+    <p>Crie nomes, mecânicas e descrições para seus jogos. Salve os melhores nomes sem cadastro, sem pagar e sem precisar de internet.</p>
+    <div class="stats"><div class="chip">⚡ Resultado instantâneo</div><div class="chip">★ Salve favoritos</div><div class="chip">💻 Funciona offline</div></div>
+  </header>
+  <main>
+    <section class="panel" aria-labelledby="generator-title">
+      <div class="panelhead"><div><h2 id="generator-title">🎮 Gerador de jogos</h2><div class="sub">Escolha um estilo e receba 8 nomes, uma mecânica e uma descrição.</div></div><span class="pill">Versão 2.0</span></div>
+      <div class="controls">
+        <div><label for="genre">Tipo de jogo</label><select id="genre"><option value="obby">Obstáculos (Obby)</option><option value="sim">Simulator</option><option value="survival">Sobrevivência</option><option value="pets">Pets e criaturas</option><option value="horror">Terror leve</option><option value="tycoon">Tycoon</option><option value="race">Corrida</option><option value="farming">Fazendinha</option><option value="puzzle">Enigmas</option></select></div>
+        <div><label for="mood">Estilo do nome</label><select id="mood"><option value="epic">Épico</option><option value="cute">Divertido</option><option value="mystery">Misterioso</option></select></div>
+        <div><label for="lang">Idioma dos nomes</label><select id="lang"><option value="en">Inglês</option><option value="pt">Português</option></select></div>
+      </div>
+      <button class="cta" id="generate" type="button">✦ Gerar ideias grátis</button>
+      <section id="results" class="output" aria-live="polite" aria-labelledby="results-title">
+        <div class="outhead"><strong id="results-title">Seus nomes gerados</strong><span class="muted">Copie ou salve seus favoritos ★</span></div>
+        <div id="namecards" class="cards"></div>
+        <div class="ideas">
+          <div class="idea"><small>💡 Ideia de mecânica</small><p id="idea"></p><button id="copyidea" type="button">Copiar ideia</button></div>
+          <div class="idea"><small>📝 Descrição de exemplo</small><p id="desc"></p><button id="copydesc" type="button">Copiar descrição</button></div>
+        </div>
+        <div class="output-actions"><button id="copyall" class="secondary-action" type="button">📋 Copiar ideia completa</button><button id="again" class="secondary-action" type="button">↻ Gerar outras ideias</button></div>
+        <div class="note">Nomes e textos gerados por combinações locais, não por uma IA online. Confira se o nome já existe antes de publicar um jogo.</div>
+      </section>
+    </section>
+    <section class="panel favorites-panel" id="favoritesSection" aria-labelledby="favorites-title">
+      <div class="panelhead">
+        <div><h2 id="favorites-title">★ Seus nomes favoritos <span id="favcount" class="fav-count">0</span></h2><div class="sub">Salvos neste navegador, mesmo depois de fechar o site.</div></div>
+        <button class="secondary-action danger" id="clearFavorites" type="button" hidden>Limpar favoritos</button>
+      </div>
+      <p class="empty" id="favoritesEmpty">Ainda não tem favoritos. Gere ideias e clique em <strong>☆ Salvar</strong> em um nome que gostar.</p>
+      <div class="cards" id="favoriteCards"></div>
+      <p class="sub" id="storageNote" hidden>Seu navegador bloqueou o armazenamento local: os favoritos podem desaparecer quando a página for fechada.</p>
+    </section>
+    <div class="extras">
+      <div class="extra"><span>🧩</span><strong>Simples de usar</strong><p>Não precisa aprender programação para gerar ideias.</p></div>
+      <div class="extra"><span>🔐</span><strong>Privacidade</strong><p>Os dados ficam somente neste navegador; não há login, anúncios ou envio a servidores.</p></div>
+      <div class="extra"><span>★</span><strong>Favoritos locais</strong><p>Guarde ideias sem criar conta. Se apagar os dados do navegador, os favoritos serão apagados.</p></div>
+    </div>
+  </main>
+</div>
+<footer>GameSpark V2 — Projeto independente de inspiração para jogos.<br>Não afiliado ao Roblox ou a outras plataformas. Sem anúncios e sem rastreamento.</footer>
+<div id="toast" role="status" aria-live="polite">Copiado!</div>
+<script>
+'use strict';
+const data={
+ obby:{topic:'obstáculos',en:['Jump','Parkour','Tower','Escape','Platform','Sky','Fall','Bounce'],pt:['Salto','Torre','Fuga','Pulo','Plataforma','Céu','Queda','Desafio'],mechanics:['A pista muda de formato a cada rodada e ninguém sabe onde será o próximo obstáculo.','Cada jogador escolhe um poder temporário antes de iniciar uma corrida cheia de plataformas móveis.','A torre ganha um andar a cada minuto, e vence quem sobreviver mais tempo.','Pisos desaparecem depois de alguns segundos; encontre o caminho antes que acabe o tempo.'],descr:'Corra, pule e desvie de obstáculos inesperados! Vença desafios rápidos, desbloqueie visuais e tente chegar ao final antes dos outros.'},
+ sim:{topic:'simulação',en:['Click','Power','Level','Training','Boost','Energy','Upgrade','Mega'],pt:['Clique','Poder','Nível','Treino','Energia','Evolução','Força','Super'],mechanics:['Você ganha energia com ações simples e troca essa energia por habilidades visuais.','Cada melhoria transforma seu personagem e desbloqueia áreas menores de treinamento.','Eventos rápidos dão bônus temporários, sem precisar ficar clicando por horas.','Desafios diários oferecem objetivos diferentes a cada visita.'],descr:'Comece pequeno e evolua seu personagem! Complete desafios, desbloqueie melhorias e descubra novas áreas enquanto progride.'},
+ survival:{topic:'sobrevivência',en:['Last','Survive','Storm','Island','Night','Safe','Chaos','Shelter'],pt:['Último','Sobreviva','Tempestade','Ilha','Noite','Abrigo','Caos','Refúgio'],mechanics:['Um evento aleatório muda as regras da arena a cada 30 segundos.','Jogadores precisam encontrar áreas seguras antes que o cenário mude.','O mapa fica cada vez menor até restar apenas um sobrevivente.','Objetos do mapa oferecem proteção por poucos segundos.'],descr:'Você consegue ser o último sobrevivente? Adapte-se aos eventos, encontre abrigo e vença rodadas imprevisíveis.'},
+ pets:{topic:'pets',en:['Pet','Critter','Creature','Buddy','Egg','Monster','Paw','Hatch'],pt:['Pet','Criatura','Mascote','Ovo','Monstrinho','Amigo','Patinha','Ninho'],mechanics:['Criaturas combinam duas habilidades simples para criar uma nova aparência.','Explore pequenos biomas para encontrar ovos com cores diferentes.','Cada pet ajuda a resolver desafios e abrir áreas secretas.','Cuide de uma criatura e descubra mudanças visuais conforme ela evolui.'],descr:'Encontre criaturas fofas, descubra ovos e monte seu time favorito. Explore áreas coloridas e complete desafios com seus pets.'},
+ horror:{topic:'mistério',en:['Shadow','Midnight','Whisper','Hidden','Echo','Door','Dark','Signal'],pt:['Sombra','Meia-Noite','Sussurro','Oculto','Eco','Porta','Escuro','Sinal'],mechanics:['Em cada rodada, uma porta leva a um cômodo diferente e um som revela o caminho certo.','Luzes se apagam por poucos segundos e você precisa lembrar o trajeto.','Jogadores encontram pistas e resolvem um enigma antes do cronômetro zerar.','O mapa muda de posição, mas deixa pistas visuais para os mais atentos.'],descr:'Explore um lugar misterioso, siga pistas e resolva pequenos enigmas. Cada rodada esconde um novo segredo.'},
+ tycoon:{topic:'construção',en:['Factory','Mini','Build','Empire','Workshop','Market','Dream','Town'],pt:['Fábrica','Mini','Construção','Império','Oficina','Mercado','Sonho','Cidade'],mechanics:['Comece com uma máquina e escolha como personalizar sua pequena fábrica.','Você pode construir uma loja compacta e desbloquear decorações por objetivos.','Produtos simples passam por esteiras e liberam novas partes do terreno.','Cada jogador monta um espaço diferente usando peças modulares.'],descr:'Construa seu próprio negócio virtual! Desbloqueie máquinas, personalize seu espaço e faça sua criação crescer.'},
+ race:{topic:'corrida',en:['Speed','Turbo','Dash','Track','Drift','Rocket','Race','Fast'],pt:['Velocidade','Turbo','Disparo','Pista','Derrapagem','Foguete','Corrida','Rápido'],mechanics:['A pista muda a cada volta e você deve escolher entre dois atalhos.','Pegue impulsos temporários e evite obstáculos nas curvas.','Corridas curtas têm desafios diferentes a cada partida.','Colete três tipos de bônus e decida quando usar cada um.'],descr:'Acelere em pistas malucas, encontre atalhos e dispute corridas rápidas! Cada segundo conta.'}
+,
+ farming:{topic:'fazendinha',en:['Farm','Harvest','Seed','Garden','Sunny','Bloom','Cozy','Village'],pt:['Fazenda','Colheita','Semente','Jardim','Sol','Flor','Campo','Vilarejo'],mechanics:['Plante sementes e descubra mutações coloridas em cada estação.','Crie uma hortinha cooperativa que rende decorações e melhorias.','Troque vegetais por sementes raras com visitantes da sua fazenda.','Cultive plantas curiosas e complete pedidos simples dos moradores.'],descr:'Cultive uma fazendinha colorida, colecione sementes e personalize seu cantinho no seu ritmo.'},
+ puzzle:{topic:'enigmas',en:['Puzzle','Brain','Logic','Mystery','Switch','Maze','Code','Portal'],pt:['Enigma','Cérebro','Lógica','Mistério','Botão','Labirinto','Código','Portal'],mechanics:['Resolva salas com botões de cores que mudam a cada rodada.','Descubra o padrão dos símbolos para abrir portas secretas.','Junte duas pistas diferentes antes do tempo acabar.','Mova blocos para criar caminhos e alcançar o próximo nível.'],descr:'Descubra pistas, resolva desafios inteligentes e libere novas salas de quebra-cabeças.'}
+};
+const endings={
+ en:{epic:['Legends','X','Quest','World','Champions','Rush','Universe','Arena','Heroes','Rise'],cute:['Party','Pals','Pop','Fun','Mania','Land','Club','Boom','Bonanza','Friends'],mystery:['Unknown','Secrets','Beyond','Mystery','Afterdark','Zero','Lab','Code','Nightfall','Lost']},
+ pt:{epic:['Lendário','Supremo','Aventura','Heróis','Infinito','Campeões','Arena','Extremo','Ascensão','Mundo'],cute:['Festa','Diversão','Maluca','Amigos','Colorido','Mania','Fofinho','Clube','Alegria','Bum'],mystery:['Secreto','Mistério','Perdido','Desconhecido','Oculto','Sombrio','Enigma','Zero','Infinito','Escondido']}
+};
+const start={en:{epic:['The','Ultra','Super','Epic','Ultimate','Mega'],cute:['Tiny','Happy','Crazy','Little','Super','Lucky'],mystery:['Lost','Secret','Silent','Dark','Hidden','Strange']},pt:{epic:['Super','Mega','Ultra','Grande','Lenda','Novo'],cute:['Mini','Super','Doido','Pequeno','Feliz','Mega'],mystery:['O','Secreto','Último','Estranho','Grande','Enigmático']}};
+const $=id=>document.getElementById(id);
+const random=a=>a[Math.floor(Math.random()*a.length)];
+const STORAGE_KEY='gamespark-v2-favoritos';
+const SESSION_KEY='gamespark-v2-nomes';
+let favorites=[];
+let storageAvailable=true;
+let lastNames=[];
+let currentNames=[];
+let currentIdea='';
+let currentDesc='';
+let activeGenre='obby';
+const genreLabels={obby:'Obstáculos',sim:'Simulator',survival:'Sobrevivência',pets:'Pets',horror:'Terror leve',tycoon:'Tycoon',race:'Corrida',farming:'Fazendinha',puzzle:'Enigmas'};
+try {
+  const parsed=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
+  favorites=Array.isArray(parsed)?parsed.filter(v=>v&&typeof v.name==='string'&&v.name.length<100).slice(0,100):[];
+  const past=JSON.parse(sessionStorage.getItem(SESSION_KEY)||'[]');
+  lastNames=Array.isArray(past)?past.filter(x=>typeof x==='string').slice(-130):[];
+} catch(e) {storageAvailable=false;favorites=[];lastNames=[];}
+if(!storageAvailable) $('storageNote').hidden=false;
+function persistFavorites(){
+  try {localStorage.setItem(STORAGE_KEY,JSON.stringify(favorites));}
+  catch(e){storageAvailable=false;$('storageNote').hidden=false;showToast('Favorito salvo só até fechar a página');}
+}
+function markHistory(){try{sessionStorage.setItem(SESSION_KEY,JSON.stringify(lastNames));}catch(e){}}
+function pickName(g,m,l){
+  const d=data[g],r=Math.random(),a=random(d[l]),b=random(endings[l][m]),s=random(start[l][m]);
+  if(r<.28)return `${a} ${b}`;
+  if(r<.51)return `${s} ${a}`;
+  if(r<.7)return `${s} ${a} ${b}`;
+  if(r<.86)return `${a}: ${b}`;
+  return `${s} ${a}: ${b}`;
+}
+function showToast(message){
+  const t=$('toast');t.textContent=message;t.classList.add('show');
+  clearTimeout(showToast.timeout);showToast.timeout=setTimeout(()=>t.classList.remove('show'),2200);
+}
+async function copyText(value){
+  let copied=false;
+  try {
+    if(navigator.clipboard && window.isSecureContext){await navigator.clipboard.writeText(value);copied=true;}
+    else {
+      const box=document.createElement('textarea');box.value=value;
+      box.style.cssText='position:fixed;left:-9999px;top:0;';
+      document.body.append(box);box.focus();box.select();
+      copied=document.execCommand('copy');box.remove();
+    }
+  } catch(e) {copied=false;}
+  showToast(copied?'Copiado!':'Não foi possível copiar automaticamente.');
+}
+function keyOf(name,genre){return genre+'::'+name;}
+function isFavorite(name,genre){return favorites.some(f=>keyOf(f.name,f.genre)===keyOf(name,genre));}
+function toggleFavorite(name,genre){
+  const key=keyOf(name,genre);
+  if(isFavorite(name,genre)){
+    favorites=favorites.filter(f=>keyOf(f.name,f.genre)!==key);
+    showToast('Removido dos favoritos');
+  } else {
+    if(favorites.length>=100){showToast('Limite de 100 favoritos atingido');return;}
+    favorites.unshift({name,genre});
+    showToast('Salvo nos favoritos ★');
+  }
+  persistFavorites();renderNames();renderFavorites();
+}
+function makeButton(text,className,handler,ariaLabel){
+  const b=document.createElement('button');b.type='button';b.className=className;b.textContent=text;
+  if(ariaLabel)b.setAttribute('aria-label',ariaLabel);
+  b.addEventListener('click',handler);return b;
+}
+function renderNames(){
+  const target=$('namecards');target.replaceChildren();
+  currentNames.forEach((name,i)=>{
+    const card=document.createElement('article');card.className='card';
+    const text=document.createElement('div');
+    const title=document.createElement('h3');title.textContent=name;
+    const note=document.createElement('small');note.textContent='Sugestão '+String(i+1).padStart(2,'0');
+    text.append(title,note);
+    const buttons=document.createElement('div');buttons.className='card-buttons';
+    buttons.append(makeButton('Copiar','copy',()=>copyText(name),'Copiar '+name));
+    const saved=isFavorite(name,activeGenre);
+    const star=makeButton(saved?'★ Salvo':'☆ Salvar','save',()=>toggleFavorite(name,activeGenre),(saved?'Remover dos favoritos ':'Salvar nos favoritos ')+name);
+    star.setAttribute('aria-pressed',String(saved));
+    buttons.append(star);card.append(text,buttons);target.append(card);
+  });
+}
+function renderFavorites(){
+  $('favcount').textContent=String(favorites.length);
+  $('favoritesEmpty').hidden=favorites.length>0;
+  $('clearFavorites').hidden=favorites.length===0;
+  const target=$('favoriteCards');target.replaceChildren();
+  for(const f of favorites){
+    const card=document.createElement('article');card.className='card saved-card';
+    const text=document.createElement('div');
+    const name=document.createElement('h3');name.textContent=f.name;
+    const label=document.createElement('small');label.textContent=genreLabels[f.genre]||'Jogo';
+    text.append(name,label);
+    const buttons=document.createElement('div');buttons.className='card-buttons';
+    buttons.append(makeButton('Copiar','copy',()=>copyText(f.name),'Copiar '+f.name));
+    buttons.append(makeButton('Remover','save',()=>toggleFavorite(f.name,f.genre),'Remover favorito '+f.name));
+    card.append(text,buttons);target.append(card);
+  }
+}
+function generate(){
+  const genre=$('genre').value,mood=$('mood').value,lang=$('lang').value,d=data[genre];
+  activeGenre=genre;
+  const names=new Set();
+  let tries=0;
+  while(names.size<8 && tries++<500){
+    const n=pickName(genre,mood,lang);
+    if(!lastNames.includes(genre+'|'+mood+'|'+lang+'|'+n))names.add(n);
+  }
+  tries=0;
+  while(names.size<8&&tries++<300)names.add(pickName(genre,mood,lang));
+  currentNames=[...names];
+  lastNames.push(...currentNames.map(n=>genre+'|'+mood+'|'+lang+'|'+n));
+  lastNames=lastNames.slice(-130);markHistory();
+  const mechanics=d.mechanics;
+  currentIdea=random(mechanics);
+  const newChallenges=[
+    'Complete desafios curtos e descubra surpresas em cada rodada.',
+    'Escolha seu estilo e desbloqueie novos desafios a cada partida.',
+    'Explore, avance e tente superar sua melhor marca.',
+    'Jogue no seu ritmo e descubra caminhos diferentes para progredir.',
+    'Experimente modos variados e volte para novas conquistas.'
+  ];
+  currentDesc=d.descr+' '+random(newChallenges);
+  $('idea').textContent=currentIdea;
+  $('desc').textContent=currentDesc;
+  renderNames();$('results').classList.add('visible');
+}
+$('generate').addEventListener('click',generate);
+$('again').addEventListener('click',generate);
+$('copyidea').addEventListener('click',()=>copyText(currentIdea));
+$('copydesc').addEventListener('click',()=>copyText(currentDesc));
+$('copyall').addEventListener('click',()=>copyText('GAME SPARK — IDEIA DE JOGO\n\nNomes sugeridos:\n'+currentNames.map((n,i)=>(i+1)+'. '+n).join('\n')+'\n\nMecânica:\n'+currentIdea+'\n\nDescrição:\n'+currentDesc));
+$('clearFavorites').addEventListener('click',()=>{
+  if(window.confirm('Deseja realmente apagar todos os seus nomes favoritos?')){
+    favorites=[];persistFavorites();renderNames();renderFavorites();showToast('Favoritos apagados');
+  }
+});
+renderFavorites();generate();
+</script>
+</body>
+</html>
